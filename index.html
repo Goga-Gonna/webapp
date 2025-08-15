@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Мой Telegram Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--tg-theme-bg-color, #fff);
+      color: var(--tg-theme-text-color, #000);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    button {
+      background-color: var(--tg-theme-button-color, #2cab37);
+      color: var(--tg-theme-button-text-color, #fff);
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="username">Загрузка...</h1>
+  <button id="sendData">Отправить данные боту</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // Показываем имя пользователя
+    document.getElementById("username").innerText =
+      `Привет, ${tg.initDataUnsafe?.user?.first_name || "гость"}!`;
+
+    // При нажатии отправляем данные боту
+    document.getElementById("sendData").addEventListener("click", () => {
+      tg.sendData(JSON.stringify({
+        action: "clicked",
+        time: new Date().toISOString()
+      }));
+    });
+  </script>
+</body>
+</html>
